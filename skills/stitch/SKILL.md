@@ -8,9 +8,9 @@ description: Use Google Stitch (AI UI/UX design and code generation) via its MCP
 Stitch turns text (or images) into UI designs and front-end code. This skill drives it through the `stitch` MCP server (`https://stitch.googleapis.com/mcp`, configured in `.mcp.json`).
 
 ## Setup
-1. Create an API key at https://stitch.withgoogle.com/ → profile → Stitch Settings → API Keys.
-2. Export it as `STITCH_API_KEY` before starting Claude Code. Never paste it into chat or commit it.
-3. If `stitch` tools are missing, tell the user the MCP server isn't connected or the key is unset.
+1. The Stitch MCP endpoint rejects API keys; it needs an OAuth2 access token. Use a Google Cloud project with the Stitch API enabled (`gcloud services enable stitch.googleapis.com`).
+2. Export `STITCH_PROJECT_ID=<gcp-project-id>` and `STITCH_ACCESS_TOKEN=$(gcloud auth print-access-token)` before starting Claude Code. Tokens expire after about an hour; refresh and restart. Never paste them into chat or commit them.
+3. If `stitch` tools are missing, tell the user the MCP server isn't connected or the token/project env vars are unset or expired.
 
 ## Domain model
 A user has **projects**; a project has many **screens**. A screen has an **image** and a full HTML document (Tailwind via CDN). "Design" means one screen or a whole project.
